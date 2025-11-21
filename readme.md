@@ -1,11 +1,20 @@
-node-easy-cert
+node-easy-certs
 -------------------
 
 [![npm download][download-image]][download-url]
 
-[download-image]: https://img.shields.io/npm/dm/node-easy-cert.svg?style=flat-square
-[download-url]: https://npmjs.org/package/node-easy-cert
+[download-image]: https://img.shields.io/npm/dm/node-easy-certs.svg?style=flat-square
+[download-url]: https://npmjs.org/package/node-easy-certs
 
+Fork from [node-easy-cert](https://github.com/ottomao/node-easy-cert). 变动如下：
+
+1.3.4 (2025-11-21)
+- feat: 给 ifRootCATrusted() 增加 timeout 参数，并将默认超时时间设置为 5000，解决新 MacOS 系统上偶发的 1s 超时。
+- fix: 修复 ifRootCATrusted() exec testCmd 失败时，callback(null, false) 两次的问题
+
+
+
+<hr/>
 
 ## 用于管理自生成的HTTPS证书的插件
 本插件可以生成自签名的root证书，并基于该root证书，生成各个域名的HTTPS证书。

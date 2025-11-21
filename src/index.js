@@ -168,7 +168,10 @@ function CertManager(options) {
     }
   }
 
-  function ifRootCATrusted(callback) {
+  function ifRootCATrusted(callback, options) {
+    options = options || {};
+    const timeout = options.timeout || 5000;
+
     if (!isRootCAFileExists()) {
       callback && callback(new Error('ROOTCA_NOT_EXIST'));
     } else if (/^win/.test(process.platform)) {
@@ -204,10 +207,11 @@ function CertManager(options) {
 
             // do not use node.http to test the cert. Ref: https://github.com/nodejs/node/issues/4175
             const testCmd = `curl https://${DOMAIN_TO_VERIFY_HTTPS}:${port}`;
-            exec(testCmd, { timeout: 1000 }, (error, stdout, stderr) => {
+            exec(testCmd, { timeout }, (error, stdout, stderr) => {
               server.close();
               if (error) {
                 callback && callback(null, false);
+                return;
               }
               if (stdout && stdout.indexOf(HTTPS_RESPONSE) >= 0) {
                 callback && callback(null, true);
